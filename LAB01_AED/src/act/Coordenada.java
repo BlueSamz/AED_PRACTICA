@@ -42,7 +42,7 @@ public class Coordenada {
     }
 
     // Método de instancia que calcula la distancia euclidiana
-    double distancia(Coordenada c) {
+    public double distancia(Coordenada c) {
         return Math.sqrt(Math.pow(this.x - c.x, 2) + Math.pow(this.y - c.y, 2));
     }
 
