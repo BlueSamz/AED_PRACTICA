@@ -1,0 +1,148 @@
+package ej;
+
+import java.util.Scanner;
+
+public class principal {
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Bucle principal para que el usuario siga seleccionando operaciones
+        while (true) {
+            // Menú de operaciones
+            System.out.println("\nMenú de Operaciones:");
+            System.out.println("1. Suma");
+            System.out.println("2. Resta");
+            System.out.println("3. Producto");
+            System.out.println("4. División");
+            System.out.println("5. Potencia");
+            System.out.println("6. Raíz Cuadrada");
+            System.out.println("7. Raíz Cúbica");
+            System.out.println("8. Salir");
+            System.out.print("Seleccione una opción: ");
+            int opcion = sc.nextInt();
+
+            if (opcion == 8) {
+                System.out.println("Saliendo del programa...");
+                break; 
+            }
+
+            // Validación de la opción seleccionada
+            if (opcion < 1 || opcion > 7) {
+                System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                continue;
+            }
+
+            int tipoDato = selecTipoDato(sc);
+            realizarOperacion(opcion, tipoDato, sc);
+        }
+    }
+
+    // Método para seleccionar el tipo de dato (Integer o Double)
+    public static int selecTipoDato(Scanner sc) {
+        int tipoDato;
+        while (true) {
+            System.out.println("Seleccione el tipo de dato:");
+            System.out.println("1. Enteros");
+            System.out.println("2. Decimales");
+            System.out.print("Ingrese su opción: ");
+            tipoDato = sc.nextInt();
+
+            if (tipoDato == 1 || tipoDato == 2) {
+                return tipoDato; // Retorna la opción seleccionada
+            } else {
+                System.out.println("Opción no válida, intente nuevamente.");
+            }
+        }
+    }
+
+    // Método para ingresar un número con validación 
+    public static Number ingresarNumero(Scanner sc, int tipoDato, String mensaje) {
+        Number numero = null;
+        while (numero == null) {
+            System.out.print(mensaje);
+            try {
+                if (tipoDato == 1) {
+                    numero = sc.nextInt(); // Integer
+                } else {
+                    numero = sc.nextDouble(); // Double
+                }
+            } catch (Exception e) {
+                System.out.println("Error: Debe ingresar un número válido.");
+                sc.next(); 
+            }
+        }
+        return numero;
+    }
+
+    // Método para realizar la operación seleccionada
+    public static void realizarOperacion(int opcion, int tipoDato, Scanner sc) {
+        Number num1, num2;
+
+        switch (opcion) {
+            case 1:
+                // Suma
+                num1 = ingresarNumero(sc, tipoDato, "Ingrese el primer número para la suma: ");
+                num2 = ingresarNumero(sc, tipoDato, "Ingrese el segundo número para la suma: ");
+                System.out.println("Resultado de la suma: " + OperacionesMat.suma(num1, num2));
+                break;
+                
+            case 2:
+                // Resta
+                num1 = ingresarNumero(sc, tipoDato, "Ingrese el primer número para la resta: ");
+                num2 = ingresarNumero(sc, tipoDato, "Ingrese el segundo número para la resta: ");
+                System.out.println("Resultado de la resta: " + OperacionesMat.resta(num1, num2));
+                break;
+                
+            case 3:
+                // Producto
+                num1 = ingresarNumero(sc, tipoDato, "Ingrese el primer número para el producto: ");
+                num2 = ingresarNumero(sc, tipoDato, "Ingrese el segundo número para el producto: ");
+                System.out.println("Resultado del producto: " + OperacionesMat.producto(num1, num2));
+                break;
+                
+            case 4:
+                // División
+                num1 = ingresarNumero(sc, tipoDato, "Ingrese el primer número para la división: ");
+                num2 = ingresarNumero(sc, tipoDato, "Ingrese el segundo número para la división: ");
+
+                // Verificación de división por cero
+                if (num2.doubleValue() == 0) {
+                    System.out.println("Error: No se puede dividir entre 0.");
+                } else {
+                    if (tipoDato == 1) {
+                        System.out.println("División: " + OperacionesMat.division((int) num1.doubleValue(), (int) num2.doubleValue()));
+                    } else {
+                        System.out.println("División: " + OperacionesMat.division(num1, num2));
+                    }
+                }
+                break;
+                
+            case 5:
+                // Potencia
+                num1 = ingresarNumero(sc, tipoDato, "Ingrese la base para la potencia: ");
+                num2 = ingresarNumero(sc, tipoDato, "Ingrese el exponente para la potencia: ");
+                System.out.println("Resultado de la potencia: " + OperacionesMat.potencia(num1, num2));
+                break;
+                
+            case 6:
+                // Raíz cuadrada
+                num1 = ingresarNumero(sc, tipoDato, "Ingrese el número para la raíz cuadrada: ");
+                if (num1.doubleValue() < 0) {
+                    System.out.println("Error: No se puede calcular la raíz cuadrada de un número negativo.");
+                } else {
+                    System.out.println("Resultado de la raíz cuadrada de " + num1 + ": " + OperacionesMat.raizCuadrada(num1));
+                }
+                break;
+                
+            case 7:
+                // Raíz cúbica
+                num1 = ingresarNumero(sc, tipoDato, "Ingrese el número para la raíz cúbica: ");
+                System.out.println("Resultado de la raíz cúbica de " + num1 + ": " + OperacionesMat.raizCubica(num1));
+                break;
+                
+            default:
+                System.out.println("Opción no válida.");
+        }
+    }
+}
